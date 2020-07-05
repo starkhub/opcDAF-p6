@@ -1,5 +1,4 @@
 $(window).on('load', function () {
-
     //DEFINITION ET INITIALISATION DES CONSTANTES DU JEU
     const gameboardDiv = $('#gameboard'); // DIV principal du plateau de jeu
     const gbCasesAmount = 100; // Nombre de cases
@@ -144,9 +143,7 @@ $(window).on('load', function () {
                 } else {
                     game(player1);
                 }
-
         }
-
         lookAround() {//PREPARATION DU CHEMIN DU JOUEUR
             var playerCase = ($('#' + this.playerId).index());
             var playerXpathLeft = [playerCase - (width / width), playerCase - (width * 2 / width), playerCase - (width * 3 / width)];
@@ -304,7 +301,6 @@ $(window).on('load', function () {
         game(player1); //LANCEMENT DU TOUR DU JOUEUR 1
     }
     //ECRAN PRINCIPAL AVANT LE JEU, ON RECUPERE LE NOM DE CHAQUE JOUEUR
-
     initializeGameboard();
     $('#gameInterface').fadeIn();
     $('.playersWeaponAttack').fadeIn();

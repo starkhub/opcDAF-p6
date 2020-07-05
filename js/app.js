@@ -223,7 +223,6 @@ $(window).on('load', function () {
         getWeapon(playerPosition) {//RAMASSAGE D'UNE ARME
             if (playerPosition.id != '' && $(playerPosition).hasClass('weapon')) {
                 var newWeapon = eval(playerPosition.id);
-                playSound(newWeapon.weaponType + 'Get');
                 $('#' + newWeapon.weaponId + ' img').remove();
                 this.playerOldWeapon = this.playerWeapon.weaponId;
                 this.playerWeapon = newWeapon;

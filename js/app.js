@@ -139,21 +139,12 @@ $(window).on('load', function () {
             $(playerPosition).append('<img src="css/images/' + this.playerId + '.png">');
             this.playerPosition = newPosition;
             let player1position = player1.playerPosition;
-            let player2position = player2.playerPosition;
-            let playersDistance = Math.abs(player1position - player2position);
-            if (playersDistance == 1 || playersDistance == 10) {
-                $('#gameboard').css('border', 'red 2px solid');
-                $('#gameInterface').css('border', 'red 2px solid');
-                updateInterface('#combatMode', 'Le combat est engagé !', 'text');
-                switchMusic('combatMusic');
-                setCombatInterface(currentPlayer, otherPlayer);
-            } else {
                 if (this.playerId == 'Player1') {
                     game(player2);
                 } else {
                     game(player1);
                 }
-            }
+
         }
 
         lookAround() {//PREPARATION DU CHEMIN DU JOUEUR
@@ -269,8 +260,8 @@ $(window).on('load', function () {
     const weapon6 = new Weapon("weapon6", "Sabre Laser", "lightSaber", 50);
     const weapons = [weapon3, weapon4, weapon5, weapon6];
     //CREATION ET PLACEMENT DES INSTANCES DE JOUEURS
-    const player1 = new Player("Player1", null, 100, weapon1, null);
-    const player2 = new Player("Player2", null, 100, weapon2, null);
+    const player1 = new Player("Player1", player1Name, 100, weapon1, null);
+    const player2 = new Player("Player2", player2Name, 100, weapon2, null);
     const players = [player1, player2]; //Création d'un tableau contenant player1 et player2
     //FONCTION PRINCIPALE LANCANT LE TOUR DU JOUEUR
     function game(player) {

@@ -5,8 +5,8 @@ $(window).on('load', function () {
     const gbCasesAmount = 100; // Nombre de cases
     const gbWallsAmount = 15; // Nombre de murs
     const width = 10; // Indice de largeur par défaut
-    var player1Name;
-    var player2Name;
+    var player1Name = 'Joueur 1';
+    var player2Name = 'Joueur 2';
     var gameboardCases;
     var sound = false;
     var music = false;
@@ -233,47 +233,6 @@ $(window).on('load', function () {
                 updateInterface('#' + this.playerId + 'WeaponImgSpan', '<img class="InterfaceWeaponImg" src="css/images/' + this.playerWeapon.weaponId + '.png">', 'append')
             }
         }
-        attack() { //ATTAQUE CONTRE LE JOUEUR ADVERSE
-            let damages = this.playerWeapon.weaponAttack; //Par défaut les dégats sont ceux de l'arme équipée
-            let currentPlayer;
-            let otherPlayer;
-            if (this.playerId == 'Player1') { //On définit le joueur actuel, on en déduit le joueur adverse
-                currentPlayer = player1;
-                otherPlayer = player2;
-            } else {
-                currentPlayer = player2;
-                otherPlayer = player1;
-            }
-            console.log(currentPlayer.weapon);
-            if (otherPlayer.playerGuard) { //On vérifie si le joueur adverse s'est défendu au tour précédent
-                damages = (currentPlayer.playerWeapon.weaponAttack / 2);
-                otherPlayer.playerGuard = false;
-            }
-            playSound(currentPlayer.playerWeapon.weaponType + 'Hit');
-            otherPlayer.playerLife -= damages; //On rédéfinie la santé du joueur adverse selon les dégâts subis
-            updateInterface('#' + otherPlayer.playerId + 'Life', otherPlayer.playerLife, 'text');
-            $('#playerStatus' + otherPlayer.playerId).effect("highlight", { color: 'red' }, 500, function () { }).dequeue().effect("shake", { times: 2 }, 500, function () {
-                setTimeout(function () {
-                    if (otherPlayer.playerLife <= 0) {
-                        switchMusic('deathMusic');
-                        setTimeout(function () {
-                            looseGame(otherPlayer.playerId, otherPlayer.playerName, currentPlayer.playerName);
-                        }, 1000)
-                    } else {
-                        setCombatInterface(currentPlayer, otherPlayer);
-                    }
-                }, 200)
-            });
-        }
-        defend() { //DÉFENSE POUR LE PROCHAIN TOUR
-            if (this.playerId == 'Player1') {
-                this.playerGuard = true;
-                setCombatInterface(player1, player2);
-            } else {
-                this.playerGuard = true;
-                setCombatInterface(player2, player1);
-            }
-        }
     }
     class Weapon {//CLASSE D'UNE ARME
         constructor(weaponId, weaponName, weaponType, weaponAttack) {
@@ -338,65 +297,6 @@ $(window).on('load', function () {
             $(target).append(content);
         }
     }
-    function setCombatInterface(currentPlayer, ennemyPlayer) {//INTERFACE EN MODE COMBAT
-        $('#combatStatus' + ennemyPlayer.playerId).fadeIn();
-        $('#playerStatus' + ennemyPlayer.playerId).css('border', '#20acff solid 2px');
-        updateInterface('#playerTurnName', "C'est à " + ennemyPlayer.playerName + ' de jouer !', 'text');
-        $('#combatStatus' + currentPlayer.playerId).fadeOut();
-        $('#playerStatus' + currentPlayer.playerId).css('border', 'none');
-    }
-    //INTERFACE LORS DE LA DEFAITE D'UN JOUEUR
-    function looseGame(looserId, looserName, winnerName) {
-        alert('Le jeu est terminé ! ' + looserName + ' a perdu !');
-        $('.combatStatus').css('display', 'none');
-        updateInterface('#combatMode', winnerName + ' est vainqueur !', 'text');
-        updateInterface('#playerTurnName', looserName + ' a perdu !', 'text');
-        updateInterface('#' + looserId + 'Life', 'Vaincu', 'text');
-        $('#' + looserId + ' img').remove();
-        updateInterface($('#' + looserId), '<img src="css/images/' + looserId + 'dead.png">', 'append');
-        $('#interface' + looserId + ' img').remove();
-        updateInterface($('#interface' + looserId), '<img src="css/images/' + looserId + 'dead.png">', 'append');
-        $('#restartGame').fadeIn();
-    }
-    function playSound(target) {//GESTION DE L'AUDIO (LECTURE MUSIQUE ET SONS)
-        if (sound) { $('#' + target).get(0).play(); }
-    }
-    function pauseMusic(target) {
-        if (sound) { $('#' + target).get(0).pause(); }
-    }
-    function switchMusic(newMusic) {
-        if (sound && music) {
-            pauseMusic(currentMusic);
-            currentMusic = newMusic;
-            playSound(currentMusic);
-        }
-    }
-    $('#player1AttackButton').click(function () {//GESTION DES BOUTONS LORS DU COMBAT
-        player1.attack();
-    });
-    $('#player1DefendButton').click(function () {
-        player1.defend();
-    });
-    $('#player2AttackButton').click(function () {
-        player2.attack();
-    });
-    $('#player2DefendButton').click(function () {
-        player2.defend();
-    });
-    $('.audioToggle').click(function () {//GESTION DU BOUTON POUR ALLUMER / ETEINDRE LE SON DANS LE JEU
-        sound = true;
-        if (sound && !music) {
-            playSound(currentMusic);
-            music = true;
-        } else {
-            pauseMusic(currentMusic);
-            sound = false;
-            music = false;
-        }
-    })
-    $('#restartGame').click(function () {
-        location.reload();
-    });
     async function initializeGameboard() {//INITIALISATION DU JEU (MISE EN PLACE DU PLATEAU) PARTIE-1
         await gameBoard.setGameboard();//On attend que la mise en place du plateau soit finie pour continuer...
         gameboardCases = $('#gameboard div').toArray();
@@ -411,35 +311,12 @@ $(window).on('load', function () {
             value.setInitialPlayerPosition(); //Placement de chaque joueur sur le plateau de jeu
         })
         setInterface(); //INITIALISATION DE L'INTERFACE
-        game(player2); //LANCEMENT DU TOUR DU JOUEUR 1
-        switchMusic('mainMusic');
+        game(player1); //LANCEMENT DU TOUR DU JOUEUR 1
     }
     //ECRAN PRINCIPAL AVANT LE JEU, ON RECUPERE LE NOM DE CHAQUE JOUEUR
-    function setWelcomeGame() {
-        currentMusic = 'introMusic';
-        $('#gameboard').css('border', '#20acff 0px solid');
-        $('#welcome-player1').fadeIn();
-        $('#player1NameCheck').click(function () {
-            if ($('#player1NameInput').val() == '') {
-                alert("Merci de renseigner un nom !");
-            } else {
-                player1.playerName = $('#player1NameInput').val();
-                $('#welcome-player1').fadeOut();
-                $('#welcome-player2').fadeIn();
-            }
-        });
-        $('#player2NameCheck').click(function () {
-            if ($('#player2NameInput').val() == '') {
-                alert("Merci de renseigner un nom !");
-            } else {
-                player2.playerName = $('#player2NameInput').val();
-                initializeGameboard();
-                $('#gameInterface').fadeIn();
-                $('.playersWeaponAttack').fadeIn();
-                $('#gameboard').css('border', '#20acff 2px solid');
-                $('#welcome-screen').fadeOut();
-            }
-        });
-    }
-    setWelcomeGame(); //LANCEMENT PRINCIPAL DU JEU
+
+    initializeGameboard();
+    $('#gameInterface').fadeIn();
+    $('.playersWeaponAttack').fadeIn();
+    $('#gameboard').css('border', '#20acff 2px solid');
 });

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'Étoile de la mort - Jeu de plateau</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <audio id="lightSaberGet" src="audio/sounds/lightSaberIgnit.wav"></audio>
+  <audio id="blasterGet" src="audio/sounds/getWeapon.wav"></audio>
+  <audio id="lightSaberHit" src="audio/sounds/lightSaberHit.wav"></audio>
+  <audio id="blasterHit" src="audio/sounds/pistol-1.wav"></audio>
+  <audio loop id="introMusic" src="audio/music/intro.mp3"></audio>
+  <audio loop id="mainMusic" src="audio/music/mainMusic.mp3"></audio>
+  <audio loop id="combatMusic" src="audio/music/combatMusic.mp3"></audio>
+  <audio id="deathMusic" src="audio/music/deathMusic.mp3"></audio>
+  <section class="main-section flex-column">
+    <div id="welcome-screen" class="flex-column">
+      <div id="welcome-speech">
+        <h1 class="main-title text-center">L'étoile de la mort</h1>
+        <p class="intro">L'Empire accroît son pouvoir jour après jour avec sa nouvelle arme surpuissante, l'étoile
+          noire...</p>
+        <p class="speech">Bien que les rebelles aient pu s'emparer des plans secrets de cette dernière afin de la
+          neutraliser, d'autres avant eux ont essayé de ralentir le chantier de construction en infiltrant les rangs de
+          l'Empire. Un héros de la rebellion est parvenu à s'infiltrer au sein de la base sidérale, mais il a été suivi
+          par un chasseur de prime à la solde de l'Empire...</p>
+      </div>
+      <div id="welcome-players-inputs">
+        <div class="welcome-player flex-column" id="welcome-player1">
+          <p>Joueur 1, pour la rebellion, sasissez votre nom : </p>
+          <input name="player1NameInput" id="player1NameInput">
+          <button id="player1NameCheck">Valider</button>
+        </div>
+        <div class="welcome-player" id="welcome-player2">
+          <p>Joueur 2, chasseur de prime, sasissez votre nom : </p>
+          <input name="player2NameInput" id="player2NameInput">
+          <button id="player2NameCheck">Valider</button>
+        </div>
+      </div>
+    </div>
+    <h1 class="main-title">L'étoile de la mort</h1>
+    <button class="audioToggle">Son On/Off</button>
+    <div id="main-container" class="flex">
+      <div id="gameInterface">
+        <div class="currentPlayer text-center">
+          <p id="combatMode"></p>
+          <p id="playerTurnName"></p>
+        </div>
+        <div class="playersStatusContainer flex-column">
+          <div id="playerStatusPlayer1" class="playerStatus flex">
+            <div class="interfacePlayer flex-column text-center" id="interfacePlayer1">
+              <img src="css/images/Player1.png">
+              <span id="Player1Name"></span>
+            </div>
+            <div class="playerInterfaceSeparator"></div>
+            <div id="interfacePlayerinfos">
+              <div class="playerLife">
+                <span class="playerLifeIcon"><img src="css/images/lifeIcon.png" alt="Santé du joueur 1"
+                    title="Santé du joueur 1"></span><span id="Player1Life"></span>
+              </div>
+              <div class="playerWeapon">
+                <div>
+                  <span id="Player1WeaponImgSpan"></span>
+                  <span class="playersWeaponAttack" id="Player1WeaponAttack"></span>
+                </div>
+                <span id="Player1Weapon"></span>
+              </div>
+            </div>
+          </div>
+          <div id="combatStatusPlayer1" class="combatStatus">
+            <button class="playersAttackButton" id="player1AttackButton">Attaquer</button>
+            <button class="playersDefendButton" id="player1DefendButton">Défendre</button>
+          </div>
+          <div id="playerStatusPlayer2" class="playerStatus flex">
+            <div class="interfacePlayer flex-column text-center" id="interfacePlayer2">
+              <img src="css/images/Player2.png">
+              <span id="Player2Name"></span>
+            </div>
+            <div class="playerInterfaceSeparator"></div>
+            <div id="interfacePlayerinfos">
+              <div class="playerLife">
+                <span class="playerLifeIcon"><img src="css/images/lifeIcon.png" alt="Santé du joueur 2"
+                    title="Santé du joueur 2"></span><span id="Player2Life"></span>
+              </div>
+              <div class="playerWeapon">
+                <div>
+                  <span id="Player2WeaponImgSpan"></span>
+                  <span class="playersWeaponAttack" id="Player2WeaponAttack"></span>
+                </div>
+                <span id="Player2Weapon"></span>
+              </div>
+            </div>
+          </div>
+          <div id="combatStatusPlayer2" class="combatStatus">
+            <button class="playersAttackButton" id="player2AttackButton">Attaquer</button>
+            <button class="playersDefendButton" id="player2DefendButton">Défendre</button>
+          </div>
+        </div>
+        <button id="restartGame">Rejouer</button>
+      </div>
+      <div id="gameboard" class="flex"></div>
+    </div>
+  </section>
+  <script src="js/jquery-3.5.1.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

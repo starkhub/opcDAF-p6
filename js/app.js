@@ -428,7 +428,7 @@ $(window).on('load', function () {
         await gameBoard.setPlayersInstances();
 
         setInterface(); //INITIALISATION DE L'INTERFACE
-        game(player2); //LANCEMENT DU TOUR DU JOUEUR 1
+        game(player1); //LANCEMENT DU TOUR DU JOUEUR 1
         switchMusic('mainMusic');
     }
     function setWelcomeGame() {//ECRAN PRINCIPAL AVANT LE JEU, ON RECUPERE LE NOM DE CHAQUE JOUEUR

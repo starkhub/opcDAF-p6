@@ -3,7 +3,7 @@ $(window).on('load', function () {
     //DEFINITION ET INITIALISATION DES CONSTANTES DU JEU
     const gameboardDiv = $('#gameboard'); // DIV principal du plateau de jeu
     const gbCasesAmount = 100; // Nombre de cases
-    const gbWallsAmount = 20; // Nombre de murs
+    const gbWallsAmount = 15; // Nombre de murs
     const width = 10; // Indice de largeur par défaut
     var player1Name = 'Joueur 1'; //Initialisation nom du joueur 1
     var player2Name = 'Joueur 2'; //Initialisation nom du joueur 2

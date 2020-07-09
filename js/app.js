@@ -53,7 +53,7 @@ $(window).on('load', function () {
                 }, 200)
             });
         }
-        setWeaponsInstances() { //METHODE LANCEMENT DU POSITIONNEMENT INITIAL DES JOUEURS
+        setWeaponsInstances() { //METHODE LANCEMENT DU POSITIONNEMENT INITIAL DES ARMES
             return new Promise((resolve) => {
                 let y = 0;
                 let i;
@@ -129,7 +129,7 @@ $(window).on('load', function () {
             $('#' + this.playerId).removeClass('player');
             $('#' + this.playerId).removeAttr('id'); //On supprime le joueur de l'écran via son ID
         }
-        setPlayerPosition(newPosition) {
+        setPlayerPosition(newPosition) {//METHODE PLACEMENT DU JOUEUR LORS D'UN DEPLACEMENT
             let currentPlayer;
             let otherPlayer;
             if (this.playerId == 'Player1') {
@@ -154,7 +154,7 @@ $(window).on('load', function () {
                 game(player1);
             }
         }
-        lookAround() {//PREPARATION DU CHEMIN DU JOUEUR
+        lookAround() {//METHODE PREPARATION DU CHEMIN DU JOUEUR
             var playerCase = this.playerPosition;
             var playerXpathLeft = [playerCase - (width / width), playerCase - (width * 2 / width), playerCase - (width * 3 / width)];
             var playerXpathRight = [playerCase + (width / width), playerCase + (width * 2 / width), playerCase + (width * 3 / width)];
@@ -198,7 +198,7 @@ $(window).on('load', function () {
             var playerFullPath = [playerXpathLeft, playerXpathRight, playerYpathTop, playerYpathBottom];
             this.drawPath(playerFullPath);
         }
-        move(player) {//DEPLACEMENT DU JOUEUR
+        move(player) {//METHODE DEPLACEMENT DU JOUEUR
             updateInterface('#playerTurnName', "C'est à " + this.playerName + ' de jouer !', 'text');
             $('#playerStatus' + this.playerId).css('border', '#20acff solid 2px');
             $('#gameboard div').click(function () {
@@ -210,7 +210,7 @@ $(window).on('load', function () {
                 }
             });
         }
-        dropWeapon() {//DEPOT D'UNE ARME SUR LE PLATEAU DE JEU
+        dropWeapon() {//METHODE DEPOT D'UNE ARME SUR LE PLATEAU DE JEU
             if (this.playerOldWeapon != null) {
                 $(gameboardCases[this.playerPosition]).attr('id', this.playerOldWeapon);
                 $(gameboardCases[this.playerPosition]).addClass(' weapon');
@@ -218,7 +218,7 @@ $(window).on('load', function () {
                 this.playerOldWeapon = null;
             }
         }
-        getWeapon(playerPosition) {//RAMASSAGE D'UNE ARME
+        getWeapon(playerPosition) {//METHODE RAMASSAGE D'UNE ARME
             if (playerPosition.id != '' && $(playerPosition).hasClass('weapon')) {
                 var newWeapon = eval(playerPosition.id);
                 $('#' + newWeapon.weaponId + ' img').remove();
@@ -239,7 +239,7 @@ $(window).on('load', function () {
             this.weaponAttack = weaponAttack;;
             this.weaponPosition = null;
         }
-        setInitialWeaponPosition() {//PLACEMENT DES ARMES
+        setInitialWeaponPosition() {//METHODE PLACEMENT INITIAL DES ARMES
             do {
                 var loopSwitch = true;
                 let randomWeaponPosition = randomPositionSelect(0, gbCasesAmount);
@@ -295,11 +295,11 @@ $(window).on('load', function () {
         }
     }
 
-    function randomPositionSelect(min, max) {
+    function randomPositionSelect(min, max) {//SELECTION D'UNE POSITION ALEATOIRE
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    function setFinalPlayerPosition(playerPosition, player) {
+    function setFinalPlayerPosition(playerPosition, player) {//PLACEMENT INITIAL DU JOUEUR
         $(playerPosition).attr('id', player.playerId);
         $(playerPosition).addClass('player');
         $(playerPosition).append('<img src="css/images/' + player.playerId + '.png">');

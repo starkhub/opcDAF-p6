@@ -200,12 +200,12 @@ $(window).on('load', function () {
             } else if (playerCase >= 0 && playerCase <= 9) {
                 playerYpathTop.splice(0, 3);
             }
-            if (playerCase >= 70 && playerCase <= 79) {
+            if (playerCase >= gbCasesAmount - (3 * width) && playerCase <= gbCasesAmount - (2 * width) - 1) {
                 playerYpathBottom.pop();
             }
-            else if (playerCase >= 80 && playerCase <= 89) {
+            else if (playerCase >= gbCasesAmount - (2 * width) && playerCase <= gbCasesAmount - (width + 1) ) {
                 playerYpathBottom.splice(1, 2);
-            } else if (playerCase >= 90 && playerCase <= 99) {
+            } else if (playerCase >= gbCasesAmount - width && playerCase <= gbCasesAmount - 1) {
                 playerYpathBottom.splice(0, 3);
             }
             var playerFullPath = [playerXpathLeft, playerXpathRight, playerYpathTop, playerYpathBottom];

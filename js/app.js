@@ -53,7 +53,7 @@ $(window).on('load', function () {
                 }, 200)
             });
         }
-        setWeaponsInstances() { //METHODE LANCEMENT DU POSITIONNEMENT INITIAL DES JOUEURS
+        setWeaponsInstances() { //METHODE LANCEMENT DU POSITIONNEMENT INITIAL DES ARMES
             return new Promise((resolve) => {
                 let y = 0;
                 let i;
@@ -117,7 +117,7 @@ $(window).on('load', function () {
             $('#' + this.playerId).removeClass('player');
             $('#' + this.playerId).removeAttr('id'); //On supprime le joueur de l'écran via son ID
         }
-        setPlayerPosition(newPosition) {
+        setPlayerPosition(newPosition) {//METHODE PLACEMENT DU JOUEUR LORS DE DEPLACEMENT
             let currentPlayer;
             let otherPlayer;
             if (this.playerId == 'Player1') {
@@ -146,7 +146,7 @@ $(window).on('load', function () {
             this.weaponAttack = weaponAttack;;
             this.weaponPosition = null;
         }
-        setInitialWeaponPosition() {//PLACEMENT DES ARMES
+        setInitialWeaponPosition() {//METHODE PLACEMENT DES ARMES
             do {
                 var loopSwitch = true;
                 let randomWeaponPosition = randomPositionSelect(0, gbCasesAmount);
@@ -179,11 +179,11 @@ $(window).on('load', function () {
     const players = [player1, player2]; //Création d'un tableau contenant player1 et player2
     //FONCTION PRINCIPALE LANCANT LE TOUR DU JOUEUR
 
-    function randomPositionSelect(min, max) {
+    function randomPositionSelect(min, max) {//SELECTION D'UNE POSITION ALEATOIRE
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    function setFinalPlayerPosition(randomPlayerPosition, playerPosition, player){
+    function setFinalPlayerPosition(randomPlayerPosition, playerPosition, player){//POSITIONNEMENT INITIAL DU JOUEUR
         $(playerPosition).attr('id', player.playerId);
         $(playerPosition).addClass('player');
         $(playerPosition).append('<img src="css/images/' + player.playerId + '.png">');

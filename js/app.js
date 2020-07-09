@@ -100,12 +100,12 @@ $(window).on('load', function () {
                 case 'Player1':
                     randomPlayerPosition = randomPositionSelect(0, (Math.floor(freeGameboardCases.length / 2)) - width);
                     playerPosition = freeGameboardCases[randomPlayerPosition];
-                    setFinalPlayerPosition(randomPlayerPosition, playerPosition, this);
+                    setFinalPlayerPosition(playerPosition, this);
                     break;
                 case 'Player2':
                     randomPlayerPosition = randomPositionSelect(Math.floor(freeGameboardCases.length / 2) + width, freeGameboardCases.length);
                     playerPosition = freeGameboardCases[randomPlayerPosition];
-                    setFinalPlayerPosition(randomPlayerPosition, playerPosition, this);
+                    setFinalPlayerPosition(playerPosition, this);
                     break;
             }
         }
@@ -155,7 +155,7 @@ $(window).on('load', function () {
             }
         }
         lookAround() {//PREPARATION DU CHEMIN DU JOUEUR
-            var playerCase = ($('#' + this.playerId).index());
+            var playerCase = this.playerPosition;
             var playerXpathLeft = [playerCase - (width / width), playerCase - (width * 2 / width), playerCase - (width * 3 / width)];
             var playerXpathRight = [playerCase + (width / width), playerCase + (width * 2 / width), playerCase + (width * 3 / width)];
             var playerYpathTop = [playerCase - width, playerCase - (width * 2), playerCase - (width * 3)];
@@ -299,12 +299,12 @@ $(window).on('load', function () {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    function setFinalPlayerPosition(randomPlayerPosition, playerPosition, player) {
+    function setFinalPlayerPosition(playerPosition, player) {
         $(playerPosition).attr('id', player.playerId);
         $(playerPosition).addClass('player');
         $(playerPosition).append('<img src="css/images/' + player.playerId + '.png">');
-        player.playerPosition = randomPlayerPosition;
-        player.playerWeapon.weaponPosition = randomPlayerPosition;
+        player.playerPosition = $(playerPosition).index();
+        player.playerWeapon.weaponPosition = player.playerPosition;
     }
 
     async function initializeGameboard() {//INITIALISATION DU JEU (MISE EN PLACE DU PLATEAU) PARTIE-1

@@ -68,7 +68,6 @@ button {
     background-repeat: no-repeat;
     position         : fixed;
     margin           : 0 auto;
-    display:none;
 }
 
 #welcome-screen p {

@@ -56,13 +56,13 @@ $(window).on('load', function () {
                 }, 200)
             });
         }
-        setWeaponsInstances() { //METHODE LANCEMENT DU POSITIONNEMENT INITIAL DES JOUEURS
+        setWeaponsInstances() { //METHODE LANCEMENT DU POSITIONNEMENT INITIAL DES ARMES
             return new Promise((resolve) => {
                 let y = 0;
                 let i;
                 setTimeout(() => {
                     $.each(weapons, function () {
-                        this.setInitialWeaponPosition();//Placement des armes sur le plateau de jeu
+                        this.setInitialWeaponPosition();//Placement initial des armes sur le plateau de jeu
                         y++;
                     })
                     resolve(y)
@@ -75,7 +75,7 @@ $(window).on('load', function () {
                 let i;
                 setTimeout(() => {
                     $.each(players, function () {
-                        this.setInitialPlayerPosition();//Placement des joueurs sur le plateau de jeu
+                        this.setInitialPlayerPosition();//Placement initial des joueurs sur le plateau de jeu
                         y++;
                     })
                     resolve(y)
@@ -116,7 +116,7 @@ $(window).on('load', function () {
             let playerId = this.playerId;
             //On reçoit un tableau qui contient 4 tableaux qui comportent des numéros qui sont les 12 cases autour du joueur horizontalement et verticalement (3 x 4)
             $.each(playerFullPath, function () { //On parcourt la liste des 4 tableaux
-                $.each(this, function () { //On parcourt les numéros des tableaux pour vérifier s'il s'agit sur le plateau d'un mur
+                $.each(this, function () { //On parcourt les numéros des tableaux pour vérifier s'il s'agit sur le plateau d'un mur ou d'un joueur
                     if ($(gameboardCases[this]).hasClass('wall') || $(gameboardCases[this]).hasClass('wall') || $(gameboardCases[this]).hasClass('player')) {
                         return false;
                     } else {
@@ -132,7 +132,7 @@ $(window).on('load', function () {
             $('#' + this.playerId).removeClass('player');
             $('#' + this.playerId).removeAttr('id'); //On supprime le joueur de l'écran via son ID
         }
-        setPlayerPosition(newPosition) {
+        setPlayerPosition(newPosition) { //METHODE DE POSITIONNEMENT DU JOUEUR APRES DEPLACEMENT
             let currentPlayer;
             let otherPlayer;
             if (this.playerId == 'Player1') {
@@ -167,7 +167,7 @@ $(window).on('load', function () {
                 }
             }
         }
-        lookAround() { //PREPARATION DU CHEMIN DU JOUEUR
+        lookAround() { //METHODE PREPARATION DU CHEMIN DU JOUEUR
             var playerCase = this.playerPosition;
             var playerXpathLeft = [playerCase - (width / width), playerCase - (width * 2 / width), playerCase - (width * 3 / width)];
             var playerXpathRight = [playerCase + (width / width), playerCase + (width * 2 / width), playerCase + (width * 3 / width)];
@@ -211,7 +211,7 @@ $(window).on('load', function () {
             var playerFullPath = [playerXpathLeft, playerXpathRight, playerYpathTop, playerYpathBottom];
             this.drawPath(playerFullPath);
         }
-        move(player) { //DEPLACEMENT DU JOUEUR
+        move(player) { //METHODE DEPLACEMENT DU JOUEUR
             updateInterface('#playerTurnName', "C'est à " + this.playerName + ' de jouer !', 'text');
             $('#playerStatus' + this.playerId).css('border', '#20acff solid 2px');
             $('#gameboard div').click(function () {
@@ -223,7 +223,7 @@ $(window).on('load', function () {
                 }
             });
         }
-        dropWeapon() { //DEPOT D'UNE ARME SUR LE PLATEAU DE JEU
+        dropWeapon() { //METHODE DEPOT D'UNE ARME SUR LE PLATEAU DE JEU
             if (this.playerOldWeapon != null) {
                 $(gameboardCases[this.playerPosition]).attr('id', this.playerOldWeapon);
                 $(gameboardCases[this.playerPosition]).addClass(' weapon');
@@ -231,7 +231,7 @@ $(window).on('load', function () {
                 this.playerOldWeapon = null;
             }
         }
-        getWeapon(playerPosition) {//RAMASSAGE D'UNE ARME
+        getWeapon(playerPosition) {//METHODE RAMASSAGE D'UNE ARME
             if (playerPosition.id != '' && $(playerPosition).hasClass('weapon')) {
                 var newWeapon = eval(playerPosition.id);
                 playSound(newWeapon.weaponType + 'Get');
@@ -244,7 +244,7 @@ $(window).on('load', function () {
                 updateInterface('#' + this.playerId + 'WeaponImgSpan', '<img class="InterfaceWeaponImg" src="css/images/' + this.playerWeapon.weaponId + '.png">', 'append')
             }
         }
-        attack() { //ATTAQUE CONTRE LE JOUEUR ADVERSE
+        attack() { //METHODE ATTAQUE CONTRE LE JOUEUR ADVERSE
             let damages = this.playerWeapon.weaponAttack; //Par défaut les dégats sont ceux de l'arme équipée
             let currentPlayer;
             let otherPlayer;
@@ -275,7 +275,7 @@ $(window).on('load', function () {
                 }, 200)
             });
         }
-        defend() { //DÉFENSE POUR LE PROCHAIN TOUR
+        defend() { //METHODE DÉFENSE POUR LE PROCHAIN TOUR
             if (this.playerId == 'Player1') {
                 this.playerGuard = true;
                 setCombatInterface(player1, player2);
@@ -293,7 +293,7 @@ $(window).on('load', function () {
             this.weaponAttack = weaponAttack;;
             this.weaponPosition = null;
         }
-        setInitialWeaponPosition() {//PLACEMENT DES ARMES
+        setInitialWeaponPosition() {//METHODE PLACEMENT DES ARMES
             do {
                 var loopSwitch = true;
                 let randomWeaponPosition = randomPositionSelect(0, gbCasesAmount);
@@ -402,10 +402,10 @@ $(window).on('load', function () {
             music = false;
         }
     })
-    $('#restartGame').click(function () {
+    $('#restartGame').click(function () { //REINITIALISATION DU JEU
         location.reload();
     });
-    function randomPositionSelect(min, max) {
+    function randomPositionSelect(min, max) { //SELECTION D'UNE POSITION ALEATOIRE
         return Math.floor(Math.random() * (max - min)) + min;
     }
     function setFinalPlayerPosition(playerPosition, player) {
